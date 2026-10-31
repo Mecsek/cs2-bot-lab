@@ -1,0 +1,131 @@
+name: cs2-bot-lab
+
+x-worker: &worker
+  build:
+    context: .
+    dockerfile: docker/worker/Dockerfile
+    args:
+      METAMOD_URL: ${METAMOD_URL:?set METAMOD_URL in .env}
+      CSS_URL: ${CSS_URL:?set CSS_URL in .env}
+  image: cs2-bot-lab-worker
+  restart: unless-stopped
+  depends_on: [api]
+  # Container uid 1000 = your host user, so bind-mounted dirs stay writable and owned by you.
+  userns_mode: keep-id
+  deploy:
+    resources:
+      limits: { cpus: "2", memory: 4g }
+  environment: &worker-env
+    CS2_RCONPW: ${RCON_PASSWORD:?set RCON_PASSWORD in .env}
+    CS2_MAXPLAYERS: "12"
+    CS2_STARTMAP: de_dust2
+    BOTLAB_API_URL: ws://api:8080/ws/plugin
+
+services:
+  postgres:
+    image: docker.io/library/postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: lab
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: lab
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "lab"]
+      interval: 5s
+      retries: 20
+
+  api:
+    build: { context: ., dockerfile: docker/services.Dockerfile, target: api }
+    restart: unless-stopped
+    depends_on: { postgres: { condition: service_healthy } }
+    environment:
+      DATABASE_URL: postgres://lab:${POSTGRES_PASSWORD}@postgres/lab
+      REPLAY_DIR: /lab/data/replays
+    volumes:
+      - ./configs:/lab/configs:ro
+      - ./data:/lab/data:ro
+    ports: ["${API_PORT:-8080}:8080"]
+
+  orchestrator:
+    build: { context: ., dockerfile: docker/services.Dockerfile, target: orchestrator }
+    restart: unless-stopped
+    # Runs migrations; api and pipeline only need the schema once it exists.
+    depends_on: { postgres: { condition: service_healthy } }
+    environment:
+      DATABASE_URL: postgres://lab:${POSTGRES_PASSWORD}@postgres/lab
+      RCON_PASSWORD: ${RCON_PASSWORD}
+      LAB_CONFIG: /lab/configs/lab.toml
+      # bollard: Docker/Podman API socket for restarting hung workers.
+      DOCKER_HOST: unix:///var/run/docker.sock
+    volumes:
+      - ./configs:/lab/configs:ro
+      - ${DOCKER_SOCK:-/var/run/docker.sock}:/var/run/docker.sock
+
+  demo-pipeline:
+    build: { context: ., dockerfile: docker/services.Dockerfile, target: demo-pipeline }
+    restart: unless-stopped
+    depends_on: { postgres: { condition: service_healthy } }
+    environment:
+      DATABASE_URL: postgres://lab:${POSTGRES_PASSWORD}@postgres/lab
+      DATA_DIR: /lab/data
+      DEMOS_DIR: /lab/data/demos
+      MAPS_FILE: /lab/configs/maps.toml
+    volumes:
+      - ./configs:/lab/configs:ro
+      - ./data:/lab/data
+
+  # Downloads/updates CS2 once into CS2_BASE_DIR, then exits. Not started by a plain `up`:
+  #   podman compose --profile install run --rm cs2-install   (stop the workers first when updating)
+  # podman-compose skips services of inactive profiles even for `run`, hence --profile.
+  # Stock image + our script, so the download can start before the worker image is built.
+  cs2-install:
+    image: docker.io/joedwards32/cs2:latest
+    profiles: [install]
+    userns_mode: keep-id
+    command: ["bash", "/botlab/install.sh"]
+    volumes:
+      - ${CS2_BASE_DIR:-./cs2-base}:/home/steam/cs2-dedicated
+      - ./docker/worker/install.sh:/botlab/install.sh:ro
+
+  ui:
+    build:
+      context: ../cs2-lab-ui
+      args: { VITE_API_URL: "${PUBLIC_API_URL:-http://localhost:8080}" }
+    restart: unless-stopped
+    ports: ["${UI_PORT:-8081}:80"]
+    profiles: [ui]
+
+  # All workers share one CS2 install as a throwaway overlay (`:O`): each sees its own
+  # writable copy, changes are discarded on stop, and the base is never modified.
+  worker1:
+    <<: *worker
+    container_name: cs2-bot-lab-worker1
+    environment: { <<: *worker-env, BOTLAB_SERVER_ID: worker1 }
+    volumes:
+      - ${CS2_BASE_DIR:-./cs2-base}:/home/steam/cs2-dedicated:O
+      - ./data/demos:/home/steam/cs2-dedicated/game/csgo/botlab_demos
+  worker2:
+    <<: *worker
+    container_name: cs2-bot-lab-worker2
+    environment: { <<: *worker-env, BOTLAB_SERVER_ID: worker2 }
+    volumes:
+      - ${CS2_BASE_DIR:-./cs2-base}:/home/steam/cs2-dedicated:O
+      - ./data/demos:/home/steam/cs2-dedicated/game/csgo/botlab_demos
+  worker3:
+    <<: *worker
+    container_name: cs2-bot-lab-worker3
+    environment: { <<: *worker-env, BOTLAB_SERVER_ID: worker3 }
+    volumes:
+      - ${CS2_BASE_DIR:-./cs2-base}:/home/steam/cs2-dedicated:O
+      - ./data/demos:/home/steam/cs2-dedicated/game/csgo/botlab_demos
+  worker4:
+    <<: *worker
+    container_name: cs2-bot-lab-worker4
+    environment: { <<: *worker-env, BOTLAB_SERVER_ID: worker4 }
+    volumes:
+      - ${CS2_BASE_DIR:-./cs2-base}:/home/steam/cs2-dedicated:O
+      - ./data/demos:/home/steam/cs2-dedicated/game/csgo/botlab_demos
+
+volumes:
+  pgdata:

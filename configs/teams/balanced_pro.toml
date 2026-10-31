@@ -1,0 +1,14 @@
+name = "BALANCED_PRO"
+description = "All-round high skill, high teamwork"
+
+[style]
+difficulty = "expert"
+skill = 95
+aggression = 55
+reaction_time = 0.15
+attack_delay = 0.05
+teamwork = 90
+weapon_preference = ["ak47", "m4a1_silencer"]
+
+[[bots]]
+weapon_preference = ["awp", "ak47", "m4a1"]

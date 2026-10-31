@@ -1,0 +1,11 @@
+name = "ECO_KINGS"
+description = "Cheap weapons, mid skill"
+
+[style]
+difficulty = "normal"
+skill = 60
+aggression = 60
+reaction_time = 0.30
+attack_delay = 0.20
+teamwork = 70
+weapon_preference = ["galilar", "famas", "ump45"]

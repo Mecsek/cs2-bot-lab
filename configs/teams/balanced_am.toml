@@ -1,0 +1,11 @@
+name = "BALANCED_AM"
+description = "All-round mid skill"
+
+[style]
+difficulty = "hard"
+skill = 60
+aggression = 50
+reaction_time = 0.30
+attack_delay = 0.20
+teamwork = 60
+weapon_preference = ["ak47", "m4a1"]

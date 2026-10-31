@@ -1,0 +1,14 @@
+name = "SLOW_ELITE"
+description = "High skill, slow reactions"
+
+[style]
+difficulty = "expert"
+skill = 90
+aggression = 45
+reaction_time = 0.45
+attack_delay = 0.30
+teamwork = 75
+weapon_preference = ["ak47", "m4a1_silencer"]
+
+[[bots]]
+weapon_preference = ["awp", "ak47", "m4a1"]

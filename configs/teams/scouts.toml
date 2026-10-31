@@ -1,0 +1,20 @@
+name = "SCOUTS"
+description = "SSG 08 snipers, aggressive"
+
+[style]
+difficulty = "hard"
+skill = 70
+aggression = 75
+reaction_time = 0.20
+attack_delay = 0.10
+teamwork = 50
+weapon_preference = ["ssg08"]
+
+[[bots]]
+weapon_preference = ["ssg08"]
+
+[[bots]]
+weapon_preference = ["ssg08"]
+
+[[bots]]
+weapon_preference = ["ssg08"]

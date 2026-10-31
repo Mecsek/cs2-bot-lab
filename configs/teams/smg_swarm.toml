@@ -1,0 +1,11 @@
+name = "SMG_SWARM"
+description = "Aggressive close-range SMG team"
+
+[style]
+difficulty = "hard"
+skill = 65
+aggression = 85
+reaction_time = 0.20
+attack_delay = 0.10
+teamwork = 60
+weapon_preference = ["p90", "mp9", "mac10"]

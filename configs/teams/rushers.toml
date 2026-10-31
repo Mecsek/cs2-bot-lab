@@ -1,0 +1,11 @@
+name = "RUSHERS"
+description = "Fast, aggressive, rifle-heavy entry team"
+
+[style]
+difficulty = "expert"
+skill = 85
+aggression = 95
+reaction_time = 0.15
+attack_delay = 0.05
+teamwork = 40
+weapon_preference = ["ak47", "m4a1_silencer"]

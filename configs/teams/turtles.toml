@@ -1,0 +1,11 @@
+name = "TURTLES"
+description = "Very passive, holds angles, high teamwork"
+
+[style]
+difficulty = "hard"
+skill = 70
+aggression = 10
+reaction_time = 0.25
+attack_delay = 0.15
+teamwork = 95
+weapon_preference = ["aug", "sg556"]

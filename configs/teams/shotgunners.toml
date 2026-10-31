@@ -1,0 +1,11 @@
+name = "SHOTGUNNERS"
+description = "Close-range heavy weapons, aggressive"
+
+[style]
+difficulty = "normal"
+skill = 55
+aggression = 90
+reaction_time = 0.30
+attack_delay = 0.15
+teamwork = 50
+weapon_preference = ["nova", "xm1014", "mag7"]

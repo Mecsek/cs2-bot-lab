@@ -1,0 +1,9 @@
+[package]
+name = "features"
+edition.workspace = true
+version.workspace = true
+
+[dependencies]
+lab-core.workspace = true
+serde.workspace = true
+

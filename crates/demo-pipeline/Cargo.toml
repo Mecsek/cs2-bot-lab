@@ -1,0 +1,25 @@
+[package]
+name = "demo-pipeline"
+edition.workspace = true
+version.workspace = true
+
+[dependencies]
+lab-core.workspace = true
+features.workspace = true
+anyhow.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+toml.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+clap.workspace = true
+uuid.workspace = true
+sqlx.workspace = true
+arrow.workspace = true
+parquet.workspace = true
+flate2 = "1"
+# Rust core of demoparser2. Pinned: CS2 updates can change the demo format, bump deliberately.
+# Its build script clones SteamDatabase/GameTracking-CS2 and needs `git` + `protoc`.
+demoparser = { package = "parser", git = "https://github.com/LaihoE/demoparser", rev = "314a253ed51488093b5f28f648694e42b561079f" }
+ahash = "0.8"

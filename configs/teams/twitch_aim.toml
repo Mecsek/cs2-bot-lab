@@ -1,0 +1,11 @@
+name = "TWITCH_AIM"
+description = "Average skill, very fast reactions"
+
+[style]
+difficulty = "hard"
+skill = 60
+aggression = 60
+reaction_time = 0.10
+attack_delay = 0.00
+teamwork = 50
+weapon_preference = ["ak47", "m4a1"]

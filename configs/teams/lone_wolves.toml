@@ -1,0 +1,11 @@
+name = "LONE_WOLVES"
+description = "Aggressive with no teamwork"
+
+[style]
+difficulty = "hard"
+skill = 75
+aggression = 80
+reaction_time = 0.20
+attack_delay = 0.10
+teamwork = 5
+weapon_preference = ["ak47", "m4a1"]

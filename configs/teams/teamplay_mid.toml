@@ -1,0 +1,14 @@
+name = "TEAMPLAY_MID"
+description = "Mid skill, maximum teamwork"
+
+[style]
+difficulty = "normal"
+skill = 55
+aggression = 40
+reaction_time = 0.30
+attack_delay = 0.20
+teamwork = 100
+weapon_preference = ["ak47", "m4a1"]
+
+[[bots]]
+weapon_preference = ["awp", "ak47", "m4a1"]

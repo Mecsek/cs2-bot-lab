@@ -1,0 +1,11 @@
+name = "ROOKIES"
+description = "Low skill, average behaviour"
+
+[style]
+difficulty = "easy"
+skill = 25
+aggression = 50
+reaction_time = 0.50
+attack_delay = 0.40
+teamwork = 50
+weapon_preference = ["ak47", "m4a1"]

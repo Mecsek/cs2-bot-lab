@@ -1,0 +1,2 @@
+# Bombsite centres per map, in Source units. Filled by `demo-pipeline calibrate-sites`
+# from observed plant positions; leave empty until enough demos exist.

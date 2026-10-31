@@ -1,0 +1,5 @@
+/target
+/data
+.env
+plugin/BotLab/out/
+/cs2-base

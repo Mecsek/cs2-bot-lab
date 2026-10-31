@@ -1,0 +1,17 @@
+name = "SNIPER_NEST"
+description = "Passive team built around two AWPers"
+
+[style]
+difficulty = "expert"
+skill = 85
+aggression = 25
+reaction_time = 0.20
+attack_delay = 0.10
+teamwork = 70
+weapon_preference = ["ak47", "m4a1"]
+
+[[bots]]
+weapon_preference = ["awp", "ak47", "m4a1"]
+
+[[bots]]
+weapon_preference = ["awp", "ak47", "m4a1"]

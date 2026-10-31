@@ -1,0 +1,38 @@
+# Orchestrator configuration. RCON password comes from the RCON_PASSWORD env var.
+teams_dir = "configs/teams"
+max_rounds = 24
+match_timeout_minutes = 120
+# Directory inside the worker's game/csgo where tv_record writes (shared volume).
+demo_subdir = "botlab_demos"
+# Maps need official nav meshes for bots to play properly.
+maps = ["de_dust2", "de_mirage", "de_inferno", "de_ancient", "de_nuke", "de_anubis", "de_overpass"]
+
+[sampler]
+# Weight of a (team pair, map) combination = 1 / (1 + matches_played)^balance_exponent.
+# 0 = uniform random; higher = stronger push toward even coverage.
+balance_exponent = 1.0
+
+[watchdog]
+# Restart a worker container through the Docker/Podman API after this many failed RCON pings.
+restart_after_failed_pings = 6
+restart_via_docker = true
+
+[[workers]]
+id = "worker1"
+rcon = "worker1:27015"
+container = "cs2-bot-lab-worker1"
+
+[[workers]]
+id = "worker2"
+rcon = "worker2:27015"
+container = "cs2-bot-lab-worker2"
+
+[[workers]]
+id = "worker3"
+rcon = "worker3:27015"
+container = "cs2-bot-lab-worker3"
+
+[[workers]]
+id = "worker4"
+rcon = "worker4:27015"
+container = "cs2-bot-lab-worker4"

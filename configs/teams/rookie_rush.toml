@@ -1,0 +1,11 @@
+name = "ROOKIE_RUSH"
+description = "Low skill but very aggressive"
+
+[style]
+difficulty = "easy"
+skill = 30
+aggression = 95
+reaction_time = 0.45
+attack_delay = 0.35
+teamwork = 30
+weapon_preference = ["ak47", "m4a1"]

@@ -1,0 +1,11 @@
+name = "AWP_SQUAD"
+description = "Mostly AWPs, mid aggression"
+
+[style]
+difficulty = "hard"
+skill = 75
+aggression = 50
+reaction_time = 0.20
+attack_delay = 0.10
+teamwork = 60
+weapon_preference = ["awp"]
