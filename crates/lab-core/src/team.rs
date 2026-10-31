@@ -15,7 +15,7 @@ pub enum Difficulty {
 }
 
 impl Difficulty {
-    /// Argument for `bot_add_ct <difficulty> <name>`.
+    /// Argument for `bot_add ct <difficulty> <name>`.
     pub fn cvar_arg(self) -> &'static str {
         match self {
             Difficulty::Easy => "easy",
@@ -97,9 +97,15 @@ pub struct ResolvedBot {
 #[derive(Debug, thiserror::Error)]
 pub enum TeamError {
     #[error("io error reading {path}: {source}")]
-    Io { path: String, source: std::io::Error },
+    Io {
+        path: String,
+        source: std::io::Error,
+    },
     #[error("invalid team file {path}: {source}")]
-    Parse { path: String, source: toml::de::Error },
+    Parse {
+        path: String,
+        source: toml::de::Error,
+    },
     #[error("team {0}: {1}")]
     Invalid(String, String),
 }
@@ -108,7 +114,10 @@ impl Team {
     pub fn validate(&self) -> Result<(), TeamError> {
         let bad = |m: &str| Err(TeamError::Invalid(self.name.clone(), m.to_string()));
         if self.name.is_empty()
-            || !self.name.chars().all(|c| c.is_ascii_uppercase() || c.is_ascii_digit() || c == '_')
+            || !self
+                .name
+                .chars()
+                .all(|c| c.is_ascii_uppercase() || c.is_ascii_digit() || c == '_')
         {
             return bad("name must be non-empty [A-Z0-9_]");
         }
@@ -218,8 +227,12 @@ impl TeamParams {
 
 pub fn load_team(path: &Path) -> Result<Team, TeamError> {
     let p = path.display().to_string();
-    let text = std::fs::read_to_string(path).map_err(|source| TeamError::Io { path: p.clone(), source })?;
-    let team: Team = toml::from_str(&text).map_err(|source| TeamError::Parse { path: p, source })?;
+    let text = std::fs::read_to_string(path).map_err(|source| TeamError::Io {
+        path: p.clone(),
+        source,
+    })?;
+    let team: Team =
+        toml::from_str(&text).map_err(|source| TeamError::Parse { path: p, source })?;
     team.validate()?;
     Ok(team)
 }
@@ -240,7 +253,10 @@ pub fn load_teams(dir: &Path) -> Result<Vec<Team>, TeamError> {
     teams.sort_by(|a, b| a.name.cmp(&b.name));
     for w in teams.windows(2) {
         if w[0].name == w[1].name {
-            return Err(TeamError::Invalid(w[0].name.clone(), "duplicate team name".into()));
+            return Err(TeamError::Invalid(
+                w[0].name.clone(),
+                "duplicate team name".into(),
+            ));
         }
     }
     Ok(teams)
