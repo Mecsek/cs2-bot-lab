@@ -70,27 +70,44 @@ impl Rcon {
 }
 
 /// RCON commands that set up a fresh match. `demo_name` is relative to game/csgo, no extension.
-pub fn setup_commands(team_a: &Team, team_b: &Team, max_rounds: u32, demo_name: &str) -> Vec<String> {
+pub fn setup_commands(
+    team_a: &Team,
+    team_b: &Team,
+    max_rounds: u32,
+    demo_name: &str,
+) -> Vec<String> {
     let mut cmds = vec![
         "exec botlab".to_string(),
         format!("mp_maxrounds {max_rounds}"),
-        "bot_kick".to_string(),
+        "bot_kick all".to_string(),
     ];
     for (team, side) in [(team_a, "ct"), (team_b, "t")] {
         for bot in team.resolved_bots() {
-            cmds.push(format!("bot_add_{side} {} \"{}\"", bot.style.difficulty.cvar_arg(), bot.name));
+            cmds.push(format!(
+                "bot_add {side} {} \"{}\"",
+                bot.style.difficulty.cvar_arg(),
+                bot.name
+            ));
         }
     }
     cmds.push("mp_warmup_end".to_string());
     cmds.push("mp_restartgame 1".to_string());
+    cmds.push("tv_enable 1".to_string());
     cmds.push(format!("tv_record \"{demo_name}\""));
     cmds
 }
 
 pub async fn run(shared: Arc<Shared>, wc: WorkerConfig) {
-    let mut rcon = Rcon { addr: wc.rcon.clone(), password: shared.rcon_password.clone(), conn: None };
+    let mut rcon = Rcon {
+        addr: wc.rcon.clone(),
+        password: shared.rcon_password.clone(),
+        conn: None,
+    };
     match db::fail_orphans(&shared.pool, &wc.id).await {
-        Ok(n) if n > 0 => warn!(worker = wc.id, n, "marked orphaned running matches as failed"),
+        Ok(n) if n > 0 => warn!(
+            worker = wc.id,
+            n, "marked orphaned running matches as failed"
+        ),
         Ok(_) => {}
         Err(e) => error!(worker = wc.id, "fail_orphans: {e:#}"),
     }
@@ -129,8 +146,14 @@ async fn play_one(shared: &Shared, wc: &WorkerConfig, rcon: &mut Rcon) -> Result
         let counts = db::play_counts(&shared.pool).await?;
         let mut names: Vec<String> = shared.teams.keys().cloned().collect();
         names.sort();
-        let matchup = sampler::sample(&mut rand::rng(), &names, &cfg.maps, &counts, cfg.sampler.balance_exponent)
-            .ok_or_else(|| anyhow!("need at least two teams"))?;
+        let matchup = sampler::sample(
+            &mut rand::rng(),
+            &names,
+            &cfg.maps,
+            &counts,
+            cfg.sampler.balance_exponent,
+        )
+        .ok_or_else(|| anyhow!("need at least two teams"))?;
         let team_a = shared.teams[&matchup.team_a].clone();
         let team_b = shared.teams[&matchup.team_b].clone();
         db::insert_match(
@@ -151,7 +174,15 @@ async fn play_one(shared: &Shared, wc: &WorkerConfig, rcon: &mut Rcon) -> Result
     info!(worker = wc.id, %id, map = matchup.map, a = matchup.team_a, b = matchup.team_b, "starting match");
 
     let result = async {
-        start_match(rcon, &matchup.map, &team_a, &team_b, cfg.max_rounds, &demo_name).await?;
+        start_match(
+            rcon,
+            &matchup.map,
+            &team_a,
+            &team_b,
+            cfg.max_rounds,
+            &demo_name,
+        )
+        .await?;
         wait_for_end(shared, wc, rcon, id).await
     }
     .await;
@@ -198,7 +229,8 @@ async fn start_match(
         }
     }
     sleep(Duration::from_secs(5)).await;
-    rcon.cmds(&setup_commands(team_a, team_b, max_rounds, demo_name)).await
+    rcon.cmds(&setup_commands(team_a, team_b, max_rounds, demo_name))
+        .await
 }
 
 async fn wait_for_end(shared: &Shared, wc: &WorkerConfig, rcon: &mut Rcon, id: Uuid) -> Result<()> {
@@ -237,7 +269,10 @@ async fn restart_container(name: &str) -> Result<()> {
     warn!(container = name, "restarting worker container");
     let docker = bollard::Docker::connect_with_local_defaults()?;
     docker
-        .restart_container(name, None::<bollard::query_parameters::RestartContainerOptions>)
+        .restart_container(
+            name,
+            None::<bollard::query_parameters::RestartContainerOptions>,
+        )
         .await
         .with_context(|| format!("restarting container {name}"))?;
     Ok(())
@@ -264,8 +299,18 @@ mod tests {
     #[test]
     fn setup_adds_ten_named_bots_and_records() {
         let cmds = setup_commands(&team("RED"), &team("BLUE"), 24, "botlab_demos/match_x");
-        assert_eq!(cmds.iter().filter(|c| c.starts_with("bot_add_ct hard \"RED_")).count(), 5);
-        assert_eq!(cmds.iter().filter(|c| c.starts_with("bot_add_t hard \"BLUE_")).count(), 5);
+        assert_eq!(
+            cmds.iter()
+                .filter(|c| c.starts_with("bot_add ct hard \"RED_"))
+                .count(),
+            5
+        );
+        assert_eq!(
+            cmds.iter()
+                .filter(|c| c.starts_with("bot_add t hard \"BLUE_"))
+                .count(),
+            5
+        );
         assert!(cmds.contains(&"mp_maxrounds 24".to_string()));
         // bots must be kicked before adding and recording must come last
         let kick = cmds.iter().position(|c| c == "bot_kick").unwrap();

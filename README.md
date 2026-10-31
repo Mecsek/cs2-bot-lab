@@ -110,7 +110,7 @@ orchestrator when a match has ended.
 **Needs a real server (spike checklist):**
 1. Metamod and CounterStrikeSharp load on the current build, and BotLab connects
    (look for `plugin connected` in the api log).
-2. A bots-only match runs with no humans, and `bot_add_ct expert "RUSHERS_1"` picks up the
+2. A bots-only match runs with no humans, and `bot_add ct expert "RUSHERS_1"` picks up the
    custom profile from the loose `botprofile.db`. If it doesn't, profiles fall back to
    default bots and only the difficulty differs.
 3. `tv_record "botlab_demos/match_…"` writes into the subdirectory.
