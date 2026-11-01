@@ -1834,7 +1834,6 @@ dependencies = [
 [[package]]
 name = "parser"
 version = "0.1.1"
-source = "git+https://github.com/LaihoE/demoparser?rev=314a253ed51488093b5f28f648694e42b561079f#314a253ed51488093b5f28f648694e42b561079f"
 dependencies = [
  "ahash",
  "bit_reverse",

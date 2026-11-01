@@ -16,7 +16,7 @@ ln -sfT "$STEAMCMDDIR/linux64/steamclient.so" ~/.steam/sdk64/steamclient.so
 
 mkdir -p "$GAME/addons" "$GAME/cfg" "$GAME/botlab_demos"
 cp -a /botlab/addons/. "$GAME/addons/"
-cp /botlab/cfg/server.cfg /botlab/cfg/botlab.cfg "$GAME/cfg/"
+cp /botlab/cfg/server.cfg /botlab/cfg/botlab.cfg /botlab/cfg/gamemode_competitive_server.cfg "$GAME/cfg/"
 # CS2 reads botprofile.db from VPKs only (loose copies are never opened), so ours ships
 # in its own VPK, mounted ahead of csgo in gameinfo.gi below.
 mkdir -p "$GAME/overrides"
