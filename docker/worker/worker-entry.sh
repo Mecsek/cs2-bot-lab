@@ -17,8 +17,10 @@ ln -sfT "$STEAMCMDDIR/linux64/steamclient.so" ~/.steam/sdk64/steamclient.so
 mkdir -p "$GAME/addons" "$GAME/cfg" "$GAME/botlab_demos"
 cp -a /botlab/addons/. "$GAME/addons/"
 cp /botlab/cfg/server.cfg /botlab/cfg/botlab.cfg "$GAME/cfg/"
-# Loose file next to the VPKs; whether CS2 prefers it over the packed one is a spike item.
-cp /botlab/botprofile.db "$GAME/botprofile.db"
+# CS2 reads botprofile.db from VPKs only (loose copies are never opened), so ours ships
+# in its own VPK, mounted ahead of csgo in gameinfo.gi below.
+mkdir -p "$GAME/overrides"
+cp /botlab/botprofile.vpk "$GAME/overrides/botprofile.vpk"
 
 # Metamod must be the first search path in gameinfo.gi.
 GI="$GAME/gameinfo.gi"
@@ -26,6 +28,10 @@ if ! grep -q "csgo/addons/metamod" "$GI"; then
     sed -i '/Game_LowViolence[[:space:]]*csgo_lv/a\\t\t\tGame\tcsgo/addons/metamod' "$GI"
 fi
 grep -q "csgo/addons/metamod" "$GI" || { echo "worker-entry: failed to patch gameinfo.gi" >&2; exit 1; }
+if ! grep -q "csgo/overrides/botprofile.vpk" "$GI"; then
+    sed -i '/Game[[:space:]]*csgo\/addons\/metamod/a\\t\t\tGame\tcsgo/overrides/botprofile.vpk' "$GI"
+fi
+grep -q "csgo/overrides/botprofile.vpk" "$GI" || { echo "worker-entry: failed to add botprofile.vpk search path" >&2; exit 1; }
 
 cd "$STEAMAPPDIR/game"
 exec ./cs2.sh -dedicated -ip 0.0.0.0 -port 27015 -console -usercon \

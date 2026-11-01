@@ -11,13 +11,14 @@ use std::sync::Arc;
 use std::time::{Duration, Instant};
 use tokio::net::TcpStream;
 use tokio::time::sleep;
-use tracing::{error, info, warn};
+use tracing::{debug, error, info, warn};
 use uuid::Uuid;
 
 const POLL_INTERVAL: Duration = Duration::from_secs(5);
 const PING_INTERVAL: Duration = Duration::from_secs(30);
 const MAP_LOAD_TIMEOUT: Duration = Duration::from_secs(120);
 const BOOT_GRACE: Duration = Duration::from_secs(180);
+const FAILED_MATCH_BACKOFF: Duration = Duration::from_secs(60);
 
 pub struct Shared {
     pub cfg: LabConfig,
@@ -61,12 +62,28 @@ impl Rcon {
         }
     }
 
+    /// Runs each command in order and fails on the first reply that reports an error, so a
+    /// broken setup (e.g. `bot_add` with a profile the server doesn't know) surfaces at once.
     async fn cmds(&mut self, cmds: &[String]) -> Result<()> {
         for c in cmds {
-            self.cmd(c).await?;
+            let out = self.cmd(c).await?;
+            let out = out.trim();
+            if !out.is_empty() {
+                debug!(cmd = c, reply = out, "rcon reply");
+            }
+            if let Some(err) = reply_error(c, out) {
+                bail!("rcon `{c}` failed: {err}");
+            }
         }
         Ok(())
     }
+}
+
+/// The error line in an RCON reply, if the server rejected the command.
+fn reply_error<'a>(cmd: &str, reply: &'a str) -> Option<&'a str> {
+    reply.lines().map(str::trim).find(|l| {
+        l.starts_with("Unknown command") || (cmd.starts_with("bot_add") && l.starts_with("Error"))
+    })
 }
 
 /// RCON commands that set up a fresh match. `demo_name` is relative to game/csgo, no extension.
@@ -199,6 +216,8 @@ async fn play_one(shared: &Shared, wc: &WorkerConfig, rcon: &mut Rcon) -> Result
         Err(e) => {
             db::mark_failed(&shared.pool, id, &format!("{e:#}")).await?;
             warn!(worker = wc.id, %id, "match failed: {e:#}");
+            // Don't hammer the server with changelevels when setup keeps failing.
+            sleep(FAILED_MATCH_BACKOFF).await;
         }
     }
     Ok(())
@@ -313,9 +332,25 @@ mod tests {
         );
         assert!(cmds.contains(&"mp_maxrounds 24".to_string()));
         // bots must be kicked before adding and recording must come last
-        let kick = cmds.iter().position(|c| c == "bot_kick").unwrap();
+        let kick = cmds.iter().position(|c| c == "bot_kick all").unwrap();
         let first_add = cmds.iter().position(|c| c.starts_with("bot_add")).unwrap();
         assert!(kick < first_add);
         assert_eq!(cmds.last().unwrap(), "tv_record \"botlab_demos/match_x\"");
+    }
+
+    #[test]
+    fn detects_rejected_commands() {
+        let add = "bot_add ct expert \"NOPE_1\"";
+        assert_eq!(
+            reply_error(add, "Error - no profile for 'NOPE_1' exists."),
+            Some("Error - no profile for 'NOPE_1' exists.")
+        );
+        assert_eq!(
+            reply_error("mp_foo 1", "Unknown command 'mp_foo'!"),
+            Some("Unknown command 'mp_foo'!")
+        );
+        assert_eq!(reply_error(add, ""), None);
+        // "Error" only counts for bot_add; other commands may echo cvar help text.
+        assert_eq!(reply_error("status", "Error rate: 0"), None);
     }
 }

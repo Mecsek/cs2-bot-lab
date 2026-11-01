@@ -20,6 +20,7 @@ COPY --from=addons /out/addons /botlab/addons
 COPY plugin/BotLab/out/ /botlab/addons/counterstrikesharp/plugins/BotLab/
 COPY docker/worker/cfg/ /botlab/cfg/
 COPY docker/worker/botprofile.db /botlab/botprofile.db
+COPY docker/worker/botprofile.vpk /botlab/botprofile.vpk
 COPY docker/worker/worker-entry.sh /botlab/
 # Workers run from the shared install and never update it; the cs2-install service does.
 CMD ["bash", "/botlab/worker-entry.sh"]

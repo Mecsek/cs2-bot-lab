@@ -1,4 +1,5 @@
 pub mod botprofile;
+pub mod vpk;
 pub mod live;
 pub mod maps;
 pub mod team;
