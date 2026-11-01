@@ -66,6 +66,8 @@ services:
   demo-pipeline:
     build: { context: ., dockerfile: docker/services.Dockerfile, target: demo-pipeline }
     restart: unless-stopped
+    # Container uid 1000 (lab) = your host user, so it can write data/parquet and data/replays.
+    userns_mode: keep-id
     depends_on: { postgres: { condition: service_healthy } }
     environment:
       DATABASE_URL: postgres://lab:${POSTGRES_PASSWORD}@postgres/lab
