@@ -9,7 +9,7 @@ Default
 	AimFocusInitial = 20
 	AimFocusDecay = 0.7
 	AimFocusOffsetScale = 0.30
-	AimFocusInterval = 0.8
+	AimfocusInterval = 0.8
 	WeaponPreference = none
 	Cost = 0
 	Difficulty = NORMAL
@@ -27,58 +27,8 @@ End
 Template Team_AWP_SQUAD
 	Skill = 75
 	Aggression = 50
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 60
-	Difficulty = HARD
-	WeaponPreference = awp
-End
-
-Team_AWP_SQUAD AWP_SQUAD_1
-	Skill = 75
-	Aggression = 50
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 60
-	Difficulty = HARD
-	WeaponPreference = awp
-End
-
-Team_AWP_SQUAD AWP_SQUAD_2
-	Skill = 75
-	Aggression = 50
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 60
-	Difficulty = HARD
-	WeaponPreference = awp
-End
-
-Team_AWP_SQUAD AWP_SQUAD_3
-	Skill = 75
-	Aggression = 50
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 60
-	Difficulty = HARD
-	WeaponPreference = awp
-End
-
-Team_AWP_SQUAD AWP_SQUAD_4
-	Skill = 75
-	Aggression = 50
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 60
-	Difficulty = HARD
-	WeaponPreference = awp
-End
-
-Team_AWP_SQUAD AWP_SQUAD_5
-	Skill = 75
-	Aggression = 50
-	ReactionTime = 0.200
-	AttackDelay = 0.100
+	ReactionTime = 0.20
+	AttackDelay = 0.10
 	Teamwork = 60
 	Difficulty = HARD
 	WeaponPreference = awp
@@ -88,63 +38,8 @@ End
 Template Team_BALANCED_AM
 	Skill = 60
 	Aggression = 50
-	ReactionTime = 0.300
-	AttackDelay = 0.200
-	Teamwork = 60
-	Difficulty = HARD
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_BALANCED_AM BALANCED_AM_1
-	Skill = 60
-	Aggression = 50
-	ReactionTime = 0.300
-	AttackDelay = 0.200
-	Teamwork = 60
-	Difficulty = HARD
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_BALANCED_AM BALANCED_AM_2
-	Skill = 60
-	Aggression = 50
-	ReactionTime = 0.300
-	AttackDelay = 0.200
-	Teamwork = 60
-	Difficulty = HARD
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_BALANCED_AM BALANCED_AM_3
-	Skill = 60
-	Aggression = 50
-	ReactionTime = 0.300
-	AttackDelay = 0.200
-	Teamwork = 60
-	Difficulty = HARD
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_BALANCED_AM BALANCED_AM_4
-	Skill = 60
-	Aggression = 50
-	ReactionTime = 0.300
-	AttackDelay = 0.200
-	Teamwork = 60
-	Difficulty = HARD
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_BALANCED_AM BALANCED_AM_5
-	Skill = 60
-	Aggression = 50
-	ReactionTime = 0.300
-	AttackDelay = 0.200
+	ReactionTime = 0.30
+	AttackDelay = 0.20
 	Teamwork = 60
 	Difficulty = HARD
 	WeaponPreference = ak47
@@ -155,64 +50,8 @@ End
 Template Team_BALANCED_PRO
 	Skill = 95
 	Aggression = 55
-	ReactionTime = 0.150
-	AttackDelay = 0.050
-	Teamwork = 90
-	Difficulty = EXPERT
-	WeaponPreference = ak47
-	WeaponPreference = m4a1_silencer
-End
-
-Team_BALANCED_PRO BALANCED_PRO_1
-	Skill = 95
-	Aggression = 55
-	ReactionTime = 0.150
-	AttackDelay = 0.050
-	Teamwork = 90
-	Difficulty = EXPERT
-	WeaponPreference = awp
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_BALANCED_PRO BALANCED_PRO_2
-	Skill = 95
-	Aggression = 55
-	ReactionTime = 0.150
-	AttackDelay = 0.050
-	Teamwork = 90
-	Difficulty = EXPERT
-	WeaponPreference = ak47
-	WeaponPreference = m4a1_silencer
-End
-
-Team_BALANCED_PRO BALANCED_PRO_3
-	Skill = 95
-	Aggression = 55
-	ReactionTime = 0.150
-	AttackDelay = 0.050
-	Teamwork = 90
-	Difficulty = EXPERT
-	WeaponPreference = ak47
-	WeaponPreference = m4a1_silencer
-End
-
-Team_BALANCED_PRO BALANCED_PRO_4
-	Skill = 95
-	Aggression = 55
-	ReactionTime = 0.150
-	AttackDelay = 0.050
-	Teamwork = 90
-	Difficulty = EXPERT
-	WeaponPreference = ak47
-	WeaponPreference = m4a1_silencer
-End
-
-Team_BALANCED_PRO BALANCED_PRO_5
-	Skill = 95
-	Aggression = 55
-	ReactionTime = 0.150
-	AttackDelay = 0.050
+	ReactionTime = 0.15
+	AttackDelay = 0.05
 	Teamwork = 90
 	Difficulty = EXPERT
 	WeaponPreference = ak47
@@ -223,68 +62,8 @@ End
 Template Team_ECO_KINGS
 	Skill = 60
 	Aggression = 60
-	ReactionTime = 0.300
-	AttackDelay = 0.200
-	Teamwork = 70
-	Difficulty = NORMAL
-	WeaponPreference = galilar
-	WeaponPreference = famas
-	WeaponPreference = ump45
-End
-
-Team_ECO_KINGS ECO_KINGS_1
-	Skill = 60
-	Aggression = 60
-	ReactionTime = 0.300
-	AttackDelay = 0.200
-	Teamwork = 70
-	Difficulty = NORMAL
-	WeaponPreference = galilar
-	WeaponPreference = famas
-	WeaponPreference = ump45
-End
-
-Team_ECO_KINGS ECO_KINGS_2
-	Skill = 60
-	Aggression = 60
-	ReactionTime = 0.300
-	AttackDelay = 0.200
-	Teamwork = 70
-	Difficulty = NORMAL
-	WeaponPreference = galilar
-	WeaponPreference = famas
-	WeaponPreference = ump45
-End
-
-Team_ECO_KINGS ECO_KINGS_3
-	Skill = 60
-	Aggression = 60
-	ReactionTime = 0.300
-	AttackDelay = 0.200
-	Teamwork = 70
-	Difficulty = NORMAL
-	WeaponPreference = galilar
-	WeaponPreference = famas
-	WeaponPreference = ump45
-End
-
-Team_ECO_KINGS ECO_KINGS_4
-	Skill = 60
-	Aggression = 60
-	ReactionTime = 0.300
-	AttackDelay = 0.200
-	Teamwork = 70
-	Difficulty = NORMAL
-	WeaponPreference = galilar
-	WeaponPreference = famas
-	WeaponPreference = ump45
-End
-
-Team_ECO_KINGS ECO_KINGS_5
-	Skill = 60
-	Aggression = 60
-	ReactionTime = 0.300
-	AttackDelay = 0.200
+	ReactionTime = 0.30
+	AttackDelay = 0.20
 	Teamwork = 70
 	Difficulty = NORMAL
 	WeaponPreference = galilar
@@ -296,63 +75,8 @@ End
 Template Team_LONE_WOLVES
 	Skill = 75
 	Aggression = 80
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 5
-	Difficulty = HARD
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_LONE_WOLVES LONE_WOLVES_1
-	Skill = 75
-	Aggression = 80
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 5
-	Difficulty = HARD
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_LONE_WOLVES LONE_WOLVES_2
-	Skill = 75
-	Aggression = 80
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 5
-	Difficulty = HARD
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_LONE_WOLVES LONE_WOLVES_3
-	Skill = 75
-	Aggression = 80
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 5
-	Difficulty = HARD
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_LONE_WOLVES LONE_WOLVES_4
-	Skill = 75
-	Aggression = 80
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 5
-	Difficulty = HARD
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_LONE_WOLVES LONE_WOLVES_5
-	Skill = 75
-	Aggression = 80
-	ReactionTime = 0.200
-	AttackDelay = 0.100
+	ReactionTime = 0.20
+	AttackDelay = 0.10
 	Teamwork = 5
 	Difficulty = HARD
 	WeaponPreference = ak47
@@ -363,63 +87,8 @@ End
 Template Team_ROOKIES
 	Skill = 25
 	Aggression = 50
-	ReactionTime = 0.500
-	AttackDelay = 0.400
-	Teamwork = 50
-	Difficulty = EASY
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_ROOKIES ROOKIES_1
-	Skill = 25
-	Aggression = 50
-	ReactionTime = 0.500
-	AttackDelay = 0.400
-	Teamwork = 50
-	Difficulty = EASY
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_ROOKIES ROOKIES_2
-	Skill = 25
-	Aggression = 50
-	ReactionTime = 0.500
-	AttackDelay = 0.400
-	Teamwork = 50
-	Difficulty = EASY
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_ROOKIES ROOKIES_3
-	Skill = 25
-	Aggression = 50
-	ReactionTime = 0.500
-	AttackDelay = 0.400
-	Teamwork = 50
-	Difficulty = EASY
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_ROOKIES ROOKIES_4
-	Skill = 25
-	Aggression = 50
-	ReactionTime = 0.500
-	AttackDelay = 0.400
-	Teamwork = 50
-	Difficulty = EASY
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_ROOKIES ROOKIES_5
-	Skill = 25
-	Aggression = 50
-	ReactionTime = 0.500
-	AttackDelay = 0.400
+	ReactionTime = 0.50
+	AttackDelay = 0.40
 	Teamwork = 50
 	Difficulty = EASY
 	WeaponPreference = ak47
@@ -430,63 +99,8 @@ End
 Template Team_ROOKIE_RUSH
 	Skill = 30
 	Aggression = 95
-	ReactionTime = 0.450
-	AttackDelay = 0.350
-	Teamwork = 30
-	Difficulty = EASY
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_ROOKIE_RUSH ROOKIE_RUSH_1
-	Skill = 30
-	Aggression = 95
-	ReactionTime = 0.450
-	AttackDelay = 0.350
-	Teamwork = 30
-	Difficulty = EASY
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_ROOKIE_RUSH ROOKIE_RUSH_2
-	Skill = 30
-	Aggression = 95
-	ReactionTime = 0.450
-	AttackDelay = 0.350
-	Teamwork = 30
-	Difficulty = EASY
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_ROOKIE_RUSH ROOKIE_RUSH_3
-	Skill = 30
-	Aggression = 95
-	ReactionTime = 0.450
-	AttackDelay = 0.350
-	Teamwork = 30
-	Difficulty = EASY
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_ROOKIE_RUSH ROOKIE_RUSH_4
-	Skill = 30
-	Aggression = 95
-	ReactionTime = 0.450
-	AttackDelay = 0.350
-	Teamwork = 30
-	Difficulty = EASY
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_ROOKIE_RUSH ROOKIE_RUSH_5
-	Skill = 30
-	Aggression = 95
-	ReactionTime = 0.450
-	AttackDelay = 0.350
+	ReactionTime = 0.45
+	AttackDelay = 0.35
 	Teamwork = 30
 	Difficulty = EASY
 	WeaponPreference = ak47
@@ -497,63 +111,8 @@ End
 Template Team_RUSHERS
 	Skill = 85
 	Aggression = 95
-	ReactionTime = 0.150
-	AttackDelay = 0.050
-	Teamwork = 40
-	Difficulty = EXPERT
-	WeaponPreference = ak47
-	WeaponPreference = m4a1_silencer
-End
-
-Team_RUSHERS RUSHERS_1
-	Skill = 85
-	Aggression = 95
-	ReactionTime = 0.150
-	AttackDelay = 0.050
-	Teamwork = 40
-	Difficulty = EXPERT
-	WeaponPreference = ak47
-	WeaponPreference = m4a1_silencer
-End
-
-Team_RUSHERS RUSHERS_2
-	Skill = 85
-	Aggression = 95
-	ReactionTime = 0.150
-	AttackDelay = 0.050
-	Teamwork = 40
-	Difficulty = EXPERT
-	WeaponPreference = ak47
-	WeaponPreference = m4a1_silencer
-End
-
-Team_RUSHERS RUSHERS_3
-	Skill = 85
-	Aggression = 95
-	ReactionTime = 0.150
-	AttackDelay = 0.050
-	Teamwork = 40
-	Difficulty = EXPERT
-	WeaponPreference = ak47
-	WeaponPreference = m4a1_silencer
-End
-
-Team_RUSHERS RUSHERS_4
-	Skill = 85
-	Aggression = 95
-	ReactionTime = 0.150
-	AttackDelay = 0.050
-	Teamwork = 40
-	Difficulty = EXPERT
-	WeaponPreference = ak47
-	WeaponPreference = m4a1_silencer
-End
-
-Team_RUSHERS RUSHERS_5
-	Skill = 85
-	Aggression = 95
-	ReactionTime = 0.150
-	AttackDelay = 0.050
+	ReactionTime = 0.15
+	AttackDelay = 0.05
 	Teamwork = 40
 	Difficulty = EXPERT
 	WeaponPreference = ak47
@@ -564,58 +123,8 @@ End
 Template Team_SCOUTS
 	Skill = 70
 	Aggression = 75
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 50
-	Difficulty = HARD
-	WeaponPreference = ssg08
-End
-
-Team_SCOUTS SCOUTS_1
-	Skill = 70
-	Aggression = 75
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 50
-	Difficulty = HARD
-	WeaponPreference = ssg08
-End
-
-Team_SCOUTS SCOUTS_2
-	Skill = 70
-	Aggression = 75
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 50
-	Difficulty = HARD
-	WeaponPreference = ssg08
-End
-
-Team_SCOUTS SCOUTS_3
-	Skill = 70
-	Aggression = 75
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 50
-	Difficulty = HARD
-	WeaponPreference = ssg08
-End
-
-Team_SCOUTS SCOUTS_4
-	Skill = 70
-	Aggression = 75
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 50
-	Difficulty = HARD
-	WeaponPreference = ssg08
-End
-
-Team_SCOUTS SCOUTS_5
-	Skill = 70
-	Aggression = 75
-	ReactionTime = 0.200
-	AttackDelay = 0.100
+	ReactionTime = 0.20
+	AttackDelay = 0.10
 	Teamwork = 50
 	Difficulty = HARD
 	WeaponPreference = ssg08
@@ -625,68 +134,8 @@ End
 Template Team_SHOTGUNNERS
 	Skill = 55
 	Aggression = 90
-	ReactionTime = 0.300
-	AttackDelay = 0.150
-	Teamwork = 50
-	Difficulty = NORMAL
-	WeaponPreference = nova
-	WeaponPreference = xm1014
-	WeaponPreference = mag7
-End
-
-Team_SHOTGUNNERS SHOTGUNNERS_1
-	Skill = 55
-	Aggression = 90
-	ReactionTime = 0.300
-	AttackDelay = 0.150
-	Teamwork = 50
-	Difficulty = NORMAL
-	WeaponPreference = nova
-	WeaponPreference = xm1014
-	WeaponPreference = mag7
-End
-
-Team_SHOTGUNNERS SHOTGUNNERS_2
-	Skill = 55
-	Aggression = 90
-	ReactionTime = 0.300
-	AttackDelay = 0.150
-	Teamwork = 50
-	Difficulty = NORMAL
-	WeaponPreference = nova
-	WeaponPreference = xm1014
-	WeaponPreference = mag7
-End
-
-Team_SHOTGUNNERS SHOTGUNNERS_3
-	Skill = 55
-	Aggression = 90
-	ReactionTime = 0.300
-	AttackDelay = 0.150
-	Teamwork = 50
-	Difficulty = NORMAL
-	WeaponPreference = nova
-	WeaponPreference = xm1014
-	WeaponPreference = mag7
-End
-
-Team_SHOTGUNNERS SHOTGUNNERS_4
-	Skill = 55
-	Aggression = 90
-	ReactionTime = 0.300
-	AttackDelay = 0.150
-	Teamwork = 50
-	Difficulty = NORMAL
-	WeaponPreference = nova
-	WeaponPreference = xm1014
-	WeaponPreference = mag7
-End
-
-Team_SHOTGUNNERS SHOTGUNNERS_5
-	Skill = 55
-	Aggression = 90
-	ReactionTime = 0.300
-	AttackDelay = 0.150
+	ReactionTime = 0.30
+	AttackDelay = 0.15
 	Teamwork = 50
 	Difficulty = NORMAL
 	WeaponPreference = nova
@@ -698,64 +147,8 @@ End
 Template Team_SLOW_ELITE
 	Skill = 90
 	Aggression = 45
-	ReactionTime = 0.450
-	AttackDelay = 0.300
-	Teamwork = 75
-	Difficulty = EXPERT
-	WeaponPreference = ak47
-	WeaponPreference = m4a1_silencer
-End
-
-Team_SLOW_ELITE SLOW_ELITE_1
-	Skill = 90
-	Aggression = 45
-	ReactionTime = 0.450
-	AttackDelay = 0.300
-	Teamwork = 75
-	Difficulty = EXPERT
-	WeaponPreference = awp
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_SLOW_ELITE SLOW_ELITE_2
-	Skill = 90
-	Aggression = 45
-	ReactionTime = 0.450
-	AttackDelay = 0.300
-	Teamwork = 75
-	Difficulty = EXPERT
-	WeaponPreference = ak47
-	WeaponPreference = m4a1_silencer
-End
-
-Team_SLOW_ELITE SLOW_ELITE_3
-	Skill = 90
-	Aggression = 45
-	ReactionTime = 0.450
-	AttackDelay = 0.300
-	Teamwork = 75
-	Difficulty = EXPERT
-	WeaponPreference = ak47
-	WeaponPreference = m4a1_silencer
-End
-
-Team_SLOW_ELITE SLOW_ELITE_4
-	Skill = 90
-	Aggression = 45
-	ReactionTime = 0.450
-	AttackDelay = 0.300
-	Teamwork = 75
-	Difficulty = EXPERT
-	WeaponPreference = ak47
-	WeaponPreference = m4a1_silencer
-End
-
-Team_SLOW_ELITE SLOW_ELITE_5
-	Skill = 90
-	Aggression = 45
-	ReactionTime = 0.450
-	AttackDelay = 0.300
+	ReactionTime = 0.45
+	AttackDelay = 0.30
 	Teamwork = 75
 	Difficulty = EXPERT
 	WeaponPreference = ak47
@@ -766,68 +159,8 @@ End
 Template Team_SMG_SWARM
 	Skill = 65
 	Aggression = 85
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 60
-	Difficulty = HARD
-	WeaponPreference = p90
-	WeaponPreference = mp9
-	WeaponPreference = mac10
-End
-
-Team_SMG_SWARM SMG_SWARM_1
-	Skill = 65
-	Aggression = 85
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 60
-	Difficulty = HARD
-	WeaponPreference = p90
-	WeaponPreference = mp9
-	WeaponPreference = mac10
-End
-
-Team_SMG_SWARM SMG_SWARM_2
-	Skill = 65
-	Aggression = 85
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 60
-	Difficulty = HARD
-	WeaponPreference = p90
-	WeaponPreference = mp9
-	WeaponPreference = mac10
-End
-
-Team_SMG_SWARM SMG_SWARM_3
-	Skill = 65
-	Aggression = 85
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 60
-	Difficulty = HARD
-	WeaponPreference = p90
-	WeaponPreference = mp9
-	WeaponPreference = mac10
-End
-
-Team_SMG_SWARM SMG_SWARM_4
-	Skill = 65
-	Aggression = 85
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 60
-	Difficulty = HARD
-	WeaponPreference = p90
-	WeaponPreference = mp9
-	WeaponPreference = mac10
-End
-
-Team_SMG_SWARM SMG_SWARM_5
-	Skill = 65
-	Aggression = 85
-	ReactionTime = 0.200
-	AttackDelay = 0.100
+	ReactionTime = 0.20
+	AttackDelay = 0.10
 	Teamwork = 60
 	Difficulty = HARD
 	WeaponPreference = p90
@@ -839,65 +172,8 @@ End
 Template Team_SNIPER_NEST
 	Skill = 85
 	Aggression = 25
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 70
-	Difficulty = EXPERT
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_SNIPER_NEST SNIPER_NEST_1
-	Skill = 85
-	Aggression = 25
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 70
-	Difficulty = EXPERT
-	WeaponPreference = awp
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_SNIPER_NEST SNIPER_NEST_2
-	Skill = 85
-	Aggression = 25
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 70
-	Difficulty = EXPERT
-	WeaponPreference = awp
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_SNIPER_NEST SNIPER_NEST_3
-	Skill = 85
-	Aggression = 25
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 70
-	Difficulty = EXPERT
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_SNIPER_NEST SNIPER_NEST_4
-	Skill = 85
-	Aggression = 25
-	ReactionTime = 0.200
-	AttackDelay = 0.100
-	Teamwork = 70
-	Difficulty = EXPERT
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_SNIPER_NEST SNIPER_NEST_5
-	Skill = 85
-	Aggression = 25
-	ReactionTime = 0.200
-	AttackDelay = 0.100
+	ReactionTime = 0.20
+	AttackDelay = 0.10
 	Teamwork = 70
 	Difficulty = EXPERT
 	WeaponPreference = ak47
@@ -908,64 +184,8 @@ End
 Template Team_TEAMPLAY_MID
 	Skill = 55
 	Aggression = 40
-	ReactionTime = 0.300
-	AttackDelay = 0.200
-	Teamwork = 100
-	Difficulty = NORMAL
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_TEAMPLAY_MID TEAMPLAY_MID_1
-	Skill = 55
-	Aggression = 40
-	ReactionTime = 0.300
-	AttackDelay = 0.200
-	Teamwork = 100
-	Difficulty = NORMAL
-	WeaponPreference = awp
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_TEAMPLAY_MID TEAMPLAY_MID_2
-	Skill = 55
-	Aggression = 40
-	ReactionTime = 0.300
-	AttackDelay = 0.200
-	Teamwork = 100
-	Difficulty = NORMAL
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_TEAMPLAY_MID TEAMPLAY_MID_3
-	Skill = 55
-	Aggression = 40
-	ReactionTime = 0.300
-	AttackDelay = 0.200
-	Teamwork = 100
-	Difficulty = NORMAL
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_TEAMPLAY_MID TEAMPLAY_MID_4
-	Skill = 55
-	Aggression = 40
-	ReactionTime = 0.300
-	AttackDelay = 0.200
-	Teamwork = 100
-	Difficulty = NORMAL
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
-End
-
-Team_TEAMPLAY_MID TEAMPLAY_MID_5
-	Skill = 55
-	Aggression = 40
-	ReactionTime = 0.300
-	AttackDelay = 0.200
+	ReactionTime = 0.30
+	AttackDelay = 0.20
 	Teamwork = 100
 	Difficulty = NORMAL
 	WeaponPreference = ak47
@@ -976,63 +196,8 @@ End
 Template Team_TURTLES
 	Skill = 70
 	Aggression = 10
-	ReactionTime = 0.250
-	AttackDelay = 0.150
-	Teamwork = 95
-	Difficulty = HARD
-	WeaponPreference = aug
-	WeaponPreference = sg556
-End
-
-Team_TURTLES TURTLES_1
-	Skill = 70
-	Aggression = 10
-	ReactionTime = 0.250
-	AttackDelay = 0.150
-	Teamwork = 95
-	Difficulty = HARD
-	WeaponPreference = aug
-	WeaponPreference = sg556
-End
-
-Team_TURTLES TURTLES_2
-	Skill = 70
-	Aggression = 10
-	ReactionTime = 0.250
-	AttackDelay = 0.150
-	Teamwork = 95
-	Difficulty = HARD
-	WeaponPreference = aug
-	WeaponPreference = sg556
-End
-
-Team_TURTLES TURTLES_3
-	Skill = 70
-	Aggression = 10
-	ReactionTime = 0.250
-	AttackDelay = 0.150
-	Teamwork = 95
-	Difficulty = HARD
-	WeaponPreference = aug
-	WeaponPreference = sg556
-End
-
-Team_TURTLES TURTLES_4
-	Skill = 70
-	Aggression = 10
-	ReactionTime = 0.250
-	AttackDelay = 0.150
-	Teamwork = 95
-	Difficulty = HARD
-	WeaponPreference = aug
-	WeaponPreference = sg556
-End
-
-Team_TURTLES TURTLES_5
-	Skill = 70
-	Aggression = 10
-	ReactionTime = 0.250
-	AttackDelay = 0.150
+	ReactionTime = 0.25
+	AttackDelay = 0.15
 	Teamwork = 95
 	Difficulty = HARD
 	WeaponPreference = aug
@@ -1043,65 +208,347 @@ End
 Template Team_TWITCH_AIM
 	Skill = 60
 	Aggression = 60
-	ReactionTime = 0.100
-	AttackDelay = 0.000
+	ReactionTime = 0.10
+	AttackDelay = 0.00
 	Teamwork = 50
 	Difficulty = HARD
 	WeaponPreference = ak47
 	WeaponPreference = m4a1
+End
+
+// Individual bots: Default, then their team template, then these overrides.
+
+Team_AWP_SQUAD AWP_SQUAD_1
+	VoicePitch = 100
+End
+
+Team_AWP_SQUAD AWP_SQUAD_2
+	VoicePitch = 100
+End
+
+Team_AWP_SQUAD AWP_SQUAD_3
+	VoicePitch = 100
+End
+
+Team_AWP_SQUAD AWP_SQUAD_4
+	VoicePitch = 100
+End
+
+Team_AWP_SQUAD AWP_SQUAD_5
+	VoicePitch = 100
+End
+
+Team_BALANCED_AM BALANCED_AM_1
+	VoicePitch = 100
+End
+
+Team_BALANCED_AM BALANCED_AM_2
+	VoicePitch = 100
+End
+
+Team_BALANCED_AM BALANCED_AM_3
+	VoicePitch = 100
+End
+
+Team_BALANCED_AM BALANCED_AM_4
+	VoicePitch = 100
+End
+
+Team_BALANCED_AM BALANCED_AM_5
+	VoicePitch = 100
+End
+
+Team_BALANCED_PRO BALANCED_PRO_1
+	WeaponPreference = awp
+	WeaponPreference = ak47
+	WeaponPreference = m4a1
+	VoicePitch = 100
+End
+
+Team_BALANCED_PRO BALANCED_PRO_2
+	VoicePitch = 100
+End
+
+Team_BALANCED_PRO BALANCED_PRO_3
+	VoicePitch = 100
+End
+
+Team_BALANCED_PRO BALANCED_PRO_4
+	VoicePitch = 100
+End
+
+Team_BALANCED_PRO BALANCED_PRO_5
+	VoicePitch = 100
+End
+
+Team_ECO_KINGS ECO_KINGS_1
+	VoicePitch = 100
+End
+
+Team_ECO_KINGS ECO_KINGS_2
+	VoicePitch = 100
+End
+
+Team_ECO_KINGS ECO_KINGS_3
+	VoicePitch = 100
+End
+
+Team_ECO_KINGS ECO_KINGS_4
+	VoicePitch = 100
+End
+
+Team_ECO_KINGS ECO_KINGS_5
+	VoicePitch = 100
+End
+
+Team_LONE_WOLVES LONE_WOLVES_1
+	VoicePitch = 100
+End
+
+Team_LONE_WOLVES LONE_WOLVES_2
+	VoicePitch = 100
+End
+
+Team_LONE_WOLVES LONE_WOLVES_3
+	VoicePitch = 100
+End
+
+Team_LONE_WOLVES LONE_WOLVES_4
+	VoicePitch = 100
+End
+
+Team_LONE_WOLVES LONE_WOLVES_5
+	VoicePitch = 100
+End
+
+Team_ROOKIES ROOKIES_1
+	VoicePitch = 100
+End
+
+Team_ROOKIES ROOKIES_2
+	VoicePitch = 100
+End
+
+Team_ROOKIES ROOKIES_3
+	VoicePitch = 100
+End
+
+Team_ROOKIES ROOKIES_4
+	VoicePitch = 100
+End
+
+Team_ROOKIES ROOKIES_5
+	VoicePitch = 100
+End
+
+Team_ROOKIE_RUSH ROOKIE_RUSH_1
+	VoicePitch = 100
+End
+
+Team_ROOKIE_RUSH ROOKIE_RUSH_2
+	VoicePitch = 100
+End
+
+Team_ROOKIE_RUSH ROOKIE_RUSH_3
+	VoicePitch = 100
+End
+
+Team_ROOKIE_RUSH ROOKIE_RUSH_4
+	VoicePitch = 100
+End
+
+Team_ROOKIE_RUSH ROOKIE_RUSH_5
+	VoicePitch = 100
+End
+
+Team_RUSHERS RUSHERS_1
+	VoicePitch = 100
+End
+
+Team_RUSHERS RUSHERS_2
+	VoicePitch = 100
+End
+
+Team_RUSHERS RUSHERS_3
+	VoicePitch = 100
+End
+
+Team_RUSHERS RUSHERS_4
+	VoicePitch = 100
+End
+
+Team_RUSHERS RUSHERS_5
+	VoicePitch = 100
+End
+
+Team_SCOUTS SCOUTS_1
+	VoicePitch = 100
+End
+
+Team_SCOUTS SCOUTS_2
+	VoicePitch = 100
+End
+
+Team_SCOUTS SCOUTS_3
+	VoicePitch = 100
+End
+
+Team_SCOUTS SCOUTS_4
+	VoicePitch = 100
+End
+
+Team_SCOUTS SCOUTS_5
+	VoicePitch = 100
+End
+
+Team_SHOTGUNNERS SHOTGUNNERS_1
+	VoicePitch = 100
+End
+
+Team_SHOTGUNNERS SHOTGUNNERS_2
+	VoicePitch = 100
+End
+
+Team_SHOTGUNNERS SHOTGUNNERS_3
+	VoicePitch = 100
+End
+
+Team_SHOTGUNNERS SHOTGUNNERS_4
+	VoicePitch = 100
+End
+
+Team_SHOTGUNNERS SHOTGUNNERS_5
+	VoicePitch = 100
+End
+
+Team_SLOW_ELITE SLOW_ELITE_1
+	WeaponPreference = awp
+	WeaponPreference = ak47
+	WeaponPreference = m4a1
+	VoicePitch = 100
+End
+
+Team_SLOW_ELITE SLOW_ELITE_2
+	VoicePitch = 100
+End
+
+Team_SLOW_ELITE SLOW_ELITE_3
+	VoicePitch = 100
+End
+
+Team_SLOW_ELITE SLOW_ELITE_4
+	VoicePitch = 100
+End
+
+Team_SLOW_ELITE SLOW_ELITE_5
+	VoicePitch = 100
+End
+
+Team_SMG_SWARM SMG_SWARM_1
+	VoicePitch = 100
+End
+
+Team_SMG_SWARM SMG_SWARM_2
+	VoicePitch = 100
+End
+
+Team_SMG_SWARM SMG_SWARM_3
+	VoicePitch = 100
+End
+
+Team_SMG_SWARM SMG_SWARM_4
+	VoicePitch = 100
+End
+
+Team_SMG_SWARM SMG_SWARM_5
+	VoicePitch = 100
+End
+
+Team_SNIPER_NEST SNIPER_NEST_1
+	WeaponPreference = awp
+	WeaponPreference = ak47
+	WeaponPreference = m4a1
+	VoicePitch = 100
+End
+
+Team_SNIPER_NEST SNIPER_NEST_2
+	WeaponPreference = awp
+	WeaponPreference = ak47
+	WeaponPreference = m4a1
+	VoicePitch = 100
+End
+
+Team_SNIPER_NEST SNIPER_NEST_3
+	VoicePitch = 100
+End
+
+Team_SNIPER_NEST SNIPER_NEST_4
+	VoicePitch = 100
+End
+
+Team_SNIPER_NEST SNIPER_NEST_5
+	VoicePitch = 100
+End
+
+Team_TEAMPLAY_MID TEAMPLAY_MID_1
+	WeaponPreference = awp
+	WeaponPreference = ak47
+	WeaponPreference = m4a1
+	VoicePitch = 100
+End
+
+Team_TEAMPLAY_MID TEAMPLAY_MID_2
+	VoicePitch = 100
+End
+
+Team_TEAMPLAY_MID TEAMPLAY_MID_3
+	VoicePitch = 100
+End
+
+Team_TEAMPLAY_MID TEAMPLAY_MID_4
+	VoicePitch = 100
+End
+
+Team_TEAMPLAY_MID TEAMPLAY_MID_5
+	VoicePitch = 100
+End
+
+Team_TURTLES TURTLES_1
+	VoicePitch = 100
+End
+
+Team_TURTLES TURTLES_2
+	VoicePitch = 100
+End
+
+Team_TURTLES TURTLES_3
+	VoicePitch = 100
+End
+
+Team_TURTLES TURTLES_4
+	VoicePitch = 100
+End
+
+Team_TURTLES TURTLES_5
+	VoicePitch = 100
 End
 
 Team_TWITCH_AIM TWITCH_AIM_1
-	Skill = 60
-	Aggression = 60
-	ReactionTime = 0.100
-	AttackDelay = 0.000
-	Teamwork = 50
-	Difficulty = HARD
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
+	VoicePitch = 100
 End
 
 Team_TWITCH_AIM TWITCH_AIM_2
-	Skill = 60
-	Aggression = 60
-	ReactionTime = 0.100
-	AttackDelay = 0.000
-	Teamwork = 50
-	Difficulty = HARD
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
+	VoicePitch = 100
 End
 
 Team_TWITCH_AIM TWITCH_AIM_3
-	Skill = 60
-	Aggression = 60
-	ReactionTime = 0.100
-	AttackDelay = 0.000
-	Teamwork = 50
-	Difficulty = HARD
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
+	VoicePitch = 100
 End
 
 Team_TWITCH_AIM TWITCH_AIM_4
-	Skill = 60
-	Aggression = 60
-	ReactionTime = 0.100
-	AttackDelay = 0.000
-	Teamwork = 50
-	Difficulty = HARD
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
+	VoicePitch = 100
 End
 
 Team_TWITCH_AIM TWITCH_AIM_5
-	Skill = 60
-	Aggression = 60
-	ReactionTime = 0.100
-	AttackDelay = 0.000
-	Teamwork = 50
-	Difficulty = HARD
-	WeaponPreference = ak47
-	WeaponPreference = m4a1
+	VoicePitch = 100
 End

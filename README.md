@@ -30,7 +30,7 @@ cp .env.example .env                          # passwords, METAMOD_URL, CSS_URL,
 systemctl --user enable --now podman.socket   # lets the orchestrator restart hung workers
 podman compose --profile install run --rm cs2-install           # downloads CS2 once (~60 GB); rerun to resume
 cargo run -p orchestrator -- check-teams
-cargo run -p orchestrator -- gen-botprofile   # -> docker/worker/botprofile.db (rerun after editing teams)
+cargo run -p orchestrator -- gen-botprofile   # -> docker/worker/botprofile.{db,vpk} (rerun after editing teams)
 plugin/BotLab/build.sh                        # -> plugin/BotLab/out/
 podman compose up -d --build                  # add `--profile ui` to also serve the UI on :8081
 ```
@@ -111,8 +111,9 @@ orchestrator when a match has ended.
 1. Metamod and CounterStrikeSharp load on the current build, and BotLab connects
    (look for `plugin connected` in the api log).
 2. A bots-only match runs with no humans, and `bot_add ct expert "RUSHERS_1"` picks up the
-   custom profile from the loose `botprofile.db`. If it doesn't, profiles fall back to
-   default bots and only the difficulty differs.
+   custom profile. CS2 reads `botprofile.db` from VPKs only and never opens a loose copy, so
+   the worker mounts `csgo/overrides/botprofile.vpk` ahead of `csgo` in `gameinfo.gi`.
+   Bots joining at map load should carry team names (`AWP_SQUAD_1`…), not stock ones.
 3. `tv_record "botlab_demos/match_…"` writes into the subdirectory.
 4. demoparser parses the demo:
    - `demo-pipeline process` prints sensible rounds and scores.

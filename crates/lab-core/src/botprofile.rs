@@ -1,8 +1,10 @@
 //! Renders the team roster into a `botprofile.db` that the CS2 server loads.
 //!
-//! Format: a `Default` block, then one `Template` per team, then one entry per bot
-//! (`<Template> <BotName> ... End`) carrying the bot's resolved attributes. Adding a bot
-//! by name (`bot_add ct expert "AGGRO_1"`) makes the server pick up that profile.
+//! Mirrors the stock file's layout: a `Default` block, then every `Template` (one per team,
+//! carrying the full team style), then one entry per bot (`<Template> <BotName> ... End`)
+//! holding only the attributes where that bot differs from its team. Line endings are CRLF
+//! like the stock file. Adding a bot by name (`bot_add ct expert "AGGRO_1"`) makes the
+//! server pick up that profile.
 
 use crate::team::{BotStyle, Team};
 use std::fmt::Write;
@@ -17,7 +19,7 @@ Default
 \tAimFocusInitial = 20
 \tAimFocusDecay = 0.7
 \tAimFocusOffsetScale = 0.30
-\tAimFocusInterval = 0.8
+\tAimfocusInterval = 0.8
 \tWeaponPreference = none
 \tCost = 0
 \tDifficulty = NORMAL
@@ -32,20 +34,51 @@ Default
 End
 ";
 
-fn write_style(out: &mut String, s: &BotStyle) {
-    let _ = writeln!(out, "\tSkill = {}", s.skill);
-    let _ = writeln!(out, "\tAggression = {}", s.aggression);
-    let _ = writeln!(out, "\tReactionTime = {:.3}", s.reaction_time);
-    let _ = writeln!(out, "\tAttackDelay = {:.3}", s.attack_delay);
-    let _ = writeln!(out, "\tTeamwork = {}", s.teamwork);
-    let _ = writeln!(out, "\tDifficulty = {}", s.difficulty.profile_value());
-    for w in &s.weapon_preference {
+fn write_weapons(out: &mut String, weapons: &[String]) {
+    for w in weapons {
         let _ = writeln!(
             out,
             "\tWeaponPreference = {}",
             w.trim_start_matches("weapon_")
         );
     }
+}
+
+fn write_style(out: &mut String, s: &BotStyle) {
+    let _ = writeln!(out, "\tSkill = {}", s.skill);
+    let _ = writeln!(out, "\tAggression = {}", s.aggression);
+    let _ = writeln!(out, "\tReactionTime = {:.2}", s.reaction_time);
+    let _ = writeln!(out, "\tAttackDelay = {:.2}", s.attack_delay);
+    let _ = writeln!(out, "\tTeamwork = {}", s.teamwork);
+    let _ = writeln!(out, "\tDifficulty = {}", s.difficulty.profile_value());
+    write_weapons(out, &s.weapon_preference);
+}
+
+/// Only the attributes where `bot` differs from its team template.
+fn write_overrides(out: &mut String, bot: &BotStyle, team: &BotStyle) {
+    if bot.skill != team.skill {
+        let _ = writeln!(out, "\tSkill = {}", bot.skill);
+    }
+    if bot.aggression != team.aggression {
+        let _ = writeln!(out, "\tAggression = {}", bot.aggression);
+    }
+    if bot.reaction_time != team.reaction_time {
+        let _ = writeln!(out, "\tReactionTime = {:.2}", bot.reaction_time);
+    }
+    if bot.attack_delay != team.attack_delay {
+        let _ = writeln!(out, "\tAttackDelay = {:.2}", bot.attack_delay);
+    }
+    if bot.teamwork != team.teamwork {
+        let _ = writeln!(out, "\tTeamwork = {}", bot.teamwork);
+    }
+    if bot.difficulty != team.difficulty {
+        let _ = writeln!(out, "\tDifficulty = {}", bot.difficulty.profile_value());
+    }
+    if bot.weapon_preference != team.weapon_preference {
+        write_weapons(out, &bot.weapon_preference);
+    }
+    // Every stock entry has a body; never emit an empty one.
+    out.push_str("\tVoicePitch = 100\n");
 }
 
 pub fn render(teams: &[Team]) -> String {
@@ -59,13 +92,16 @@ pub fn render(teams: &[Team]) -> String {
         let _ = writeln!(out, "Template Team_{}", team.name);
         write_style(&mut out, &team.style);
         out.push_str("End\n");
+    }
+    out.push_str("\n// Individual bots: Default, then their team template, then these overrides.\n");
+    for team in teams {
         for bot in team.resolved_bots() {
             let _ = writeln!(out, "\nTeam_{} {}", team.name, bot.name);
-            write_style(&mut out, &bot.style);
+            write_overrides(&mut out, &bot.style, &team.style);
             out.push_str("End\n");
         }
     }
-    out
+    out.replace('\n', "\r\n")
 }
 
 #[cfg(test)]
@@ -75,13 +111,21 @@ mod tests {
 
     #[test]
     fn renders_template_and_bots() {
-        let s = render(&[sample()]);
+        let crlf = render(&[sample()]);
+        assert!(!crlf.replace("\r\n", "").contains('\n'), "all line endings must be CRLF");
+        let s = crlf.replace("\r\n", "\n");
         assert!(s.starts_with("// Generated"));
+        assert!(s.contains("\tAimfocusInterval = 0.8\n"));
         assert!(s.contains("Template Team_AGGRO\n"));
-        assert!(s.contains("Team_AGGRO AGGRO_1\n"));
-        assert!(s.contains("Team_AGGRO AGGRO_5\n"));
-        assert!(s.contains("WeaponPreference = awp"));
         assert!(s.contains("Difficulty = EXPERT"));
+        // bot 1 overrides skill and weapons; bot 2 only carries the mandatory body
+        assert!(s.contains(
+            "Team_AGGRO AGGRO_1\n\tSkill = 100\n\tWeaponPreference = awp\n\tVoicePitch = 100\nEnd\n"
+        ));
+        assert!(s.contains("Team_AGGRO AGGRO_2\n\tVoicePitch = 100\nEnd\n"));
+        // templates come before every bot entry
+        let last_template = s.rfind("Template ").unwrap();
+        assert!(last_template < s.find("Team_AGGRO AGGRO_1").unwrap());
         // every opened block is closed
         let opens = s
             .lines()

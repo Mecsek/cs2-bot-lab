@@ -30,6 +30,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
       POSTGRES_DB: lab
     volumes: [pgdata:/var/lib/postgresql/data]
+    ports: ["${POSTGRES_PORT:-5432}:5432"]   
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "lab"]
       interval: 5s

@@ -30,6 +30,9 @@ enum Cmd {
     GenBotprofile {
         #[arg(long, default_value = "docker/worker/botprofile.db")]
         out: PathBuf,
+        /// VPK holding the same file; CS2 only reads botprofile.db from VPKs.
+        #[arg(long, default_value = "docker/worker/botprofile.vpk")]
+        vpk_out: PathBuf,
     },
     /// Validate team files and print each team's averaged parameters.
     CheckTeams,
@@ -47,10 +50,20 @@ async fn main() -> Result<()> {
     let teams = lab_core::team::load_teams(&cfg.teams_dir)?;
 
     match cli.cmd {
-        Cmd::GenBotprofile { out } => {
-            std::fs::write(&out, lab_core::botprofile::render(&teams))
-                .with_context(|| format!("writing {}", out.display()))?;
-            println!("wrote {} teams to {}", teams.len(), out.display());
+        Cmd::GenBotprofile { out, vpk_out } => {
+            let db = lab_core::botprofile::render(&teams);
+            std::fs::write(&out, &db).with_context(|| format!("writing {}", out.display()))?;
+            std::fs::write(
+                &vpk_out,
+                lab_core::vpk::single_file("botprofile.db", db.as_bytes()),
+            )
+            .with_context(|| format!("writing {}", vpk_out.display()))?;
+            println!(
+                "wrote {} teams to {} and {}",
+                teams.len(),
+                out.display(),
+                vpk_out.display()
+            );
         }
         Cmd::CheckTeams => {
             for t in &teams {
