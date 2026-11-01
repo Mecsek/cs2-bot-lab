@@ -108,6 +108,7 @@ services:
     <<: *worker
     container_name: cs2-bot-lab-worker1
     environment: { <<: *worker-env, BOTLAB_SERVER_ID: worker1 }
+    ports: ["27021:27020/udp"]   # SourceTV: connect 127.0.0.1:27021 from a CS2 client
     volumes:
       - ${CS2_BASE_DIR:-./cs2-base}:/home/steam/cs2-dedicated:O
       - ./data/demos:/home/steam/cs2-dedicated/game/csgo/botlab_demos
@@ -115,6 +116,7 @@ services:
     <<: *worker
     container_name: cs2-bot-lab-worker2
     environment: { <<: *worker-env, BOTLAB_SERVER_ID: worker2 }
+    ports: ["27022:27020/udp"]
     volumes:
       - ${CS2_BASE_DIR:-./cs2-base}:/home/steam/cs2-dedicated:O
       - ./data/demos:/home/steam/cs2-dedicated/game/csgo/botlab_demos
@@ -122,6 +124,7 @@ services:
     <<: *worker
     container_name: cs2-bot-lab-worker3
     environment: { <<: *worker-env, BOTLAB_SERVER_ID: worker3 }
+    ports: ["27023:27020/udp"]
     volumes:
       - ${CS2_BASE_DIR:-./cs2-base}:/home/steam/cs2-dedicated:O
       - ./data/demos:/home/steam/cs2-dedicated/game/csgo/botlab_demos
@@ -129,6 +132,7 @@ services:
     <<: *worker
     container_name: cs2-bot-lab-worker4
     environment: { <<: *worker-env, BOTLAB_SERVER_ID: worker4 }
+    ports: ["27024:27020/udp"]
     volumes:
       - ${CS2_BASE_DIR:-./cs2-base}:/home/steam/cs2-dedicated:O
       - ./data/demos:/home/steam/cs2-dedicated/game/csgo/botlab_demos

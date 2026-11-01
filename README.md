@@ -87,6 +87,8 @@ worker.
   To show live predictions in the UI, compute `features::extract` on the live frame (in
   `crates/api/src/live.rs::on_frame`) and broadcast `UiMessage::WinProb`. The UI already
   charts it.
+- **Watch in CS2:** each worker's SourceTV is published on UDP 27021–27024 (worker1–4).
+  In the CS2 console: `connect 127.0.0.1:27021`. The feed is live (`tv_delay 0`) and shows all players.
 - **Debug one demo:** `cargo run -p demo-pipeline -- process path/to/match.dem`.
 
 ## Demo parsing
