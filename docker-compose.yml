@@ -95,6 +95,9 @@ services:
       args: { VITE_API_URL: "${PUBLIC_API_URL:-http://localhost:8080}" }
     restart: unless-stopped
     ports: ["${UI_PORT:-8081}:80"]
+    # Exported map GLBs are large; serve them from the UI checkout instead of baking them in.
+    volumes:
+      - ../cs2-lab-ui/public/maps:/usr/share/nginx/html/maps:ro
     profiles: [ui]
 
   # All workers share one CS2 install as a throwaway overlay (`:O`): each sees its own
