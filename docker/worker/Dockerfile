@@ -12,7 +12,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates
 WORKDIR /out
 RUN curl -fsSL "$METAMOD_URL" -o mm.tar.gz && tar -xzf mm.tar.gz && rm mm.tar.gz \
     && curl -fsSL "$CSS_URL" -o css.zip && unzip -q -o css.zip && rm css.zip \
-    && test -d addons/metamod && test -d addons/counterstrikesharp
+    && test -d addons/metamod && test -d addons/counterstrikesharp \
+    && { test -d addons/counterstrikesharp/dotnet \
+         || { echo "CSS_URL must be the with-runtime release" >&2; exit 1; }; }
 
 FROM docker.io/joedwards32/cs2:latest
 COPY --from=addons /out/addons /botlab/addons
