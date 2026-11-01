@@ -1,14 +1,18 @@
 # cs2-bot-lab
 
+<!--toc:start-->
+- [cs2-bot-lab](#cs2-bot-lab)
+  - [Setup](#setup)
+    - [Shared CS2 install](#shared-cs2-install)
+    - [Worker image](#worker-image)
+  - [Workflow](#workflow)
+  - [Demo parsing](#demo-parsing)
+  - [Dataset (`data/parquet/<table>/map=<map>/<match_id>.parquet`)](#dataset-dataparquettablemapmapmatchidparquet)
+<!--toc:end-->
+
 Self-running CS2 bot-vs-bot matches → a labelled dataset for **round win probability**
 ("given this moment of the round, how likely is CT to win against this opponent?"), plus a
-live 3D viewer (separate project: `../cs2-lab-ui`).
-
-```
-cs2 worker ×4 ──(plugin WS, 16 Hz)──▶ api ──WS──▶ cs2-lab-ui (3D live + replays)
-     ▲   └─(tv_record .dem)─▶ data/demos ─▶ demo-pipeline ─▶ data/parquet, data/replays
-     └─RCON── orchestrator ──▶ Postgres ◀── api / demo-pipeline
-```
+live 3D viewer (separate project: `cs2-lab-ui`).
 
 The model itself is not part of this repo: train your own on `round_state_samples`.
 
@@ -22,17 +26,18 @@ The model itself is not part of this repo: train your own on `round_state_sample
 | `plugin/BotLab` | CounterStrikeSharp plugin streaming live state (C#) |
 | `configs/teams/*.toml` | Bot team roster (16 styles) |
 | `vendor/csgoproto` | demoparser's protobuf crate with protos pinned (see its `build.rs`) |
+| `vendor/demoparser-parser` | demoparser's parser crate, patched to parse bots (see its `BOTLAB-PATCH.md`) |
 
-## Setup (Podman)
+## Setup
 
 ```sh
 cp .env.example .env                          # passwords, METAMOD_URL, CSS_URL, CS2_BASE_DIR
-systemctl --user enable --now podman.socket   # lets the orchestrator restart hung workers
-podman compose --profile install run --rm cs2-install           # downloads CS2 once (~60 GB); rerun to resume
+# for podman run systemctl --user enable --now podman.socket lets the orchestrator restart hung workers
+docker compose --profile install run --rm cs2-install # downloads CS2 once (~60 GB); rerun to resume
 cargo run -p orchestrator -- check-teams
 cargo run -p orchestrator -- gen-botprofile   # -> docker/worker/botprofile.{db,vpk} (rerun after editing teams)
 plugin/BotLab/build.sh                        # -> plugin/BotLab/out/
-podman compose up -d --build                  # add `--profile ui` to also serve the UI on :8081
+docker compose up -d --build                  # add `--profile ui` to also serve the UI on :8081
 ```
 
 ### Shared CS2 install
@@ -51,9 +56,9 @@ stops. `worker-entry.sh` re-applies them on every start. This means:
 **Updating CS2** is a deliberate step. Workers that are running while the base changes
 underneath their overlay could break, so stop them first:
 ```sh
-podman compose stop worker1 worker2 worker3 worker4
-podman compose --profile install run --rm cs2-install
-podman compose up -d
+docker compose stop worker1 worker2 worker3 worker4
+docker compose --profile install run --rm cs2-install
+docker compose up -d
 ```
 Each worker logs the CS2 build it runs (`worker-entry: CS2 build …`). After a Valve update,
 Metamod and CounterStrikeSharp may need newer releases (`METAMOD_URL` / `CSS_URL`) before the
@@ -84,6 +89,26 @@ worker.
   charts it.
 - **Debug one demo:** `cargo run -p demo-pipeline -- process path/to/match.dem`.
 
+## Demo parsing
+
+`demo-pipeline` uses the Rust core of [demoparser](https://github.com/LaihoE/demoparser), pinned to
+one rev in `crates/demo-pipeline/Cargo.toml` (CS2 updates can change the demo format, so bump it
+deliberately). Two of its crates are replaced through `[patch."https://github.com/LaihoE/demoparser"]`
+in the root `Cargo.toml`:
+
+- `vendor/csgoproto`: its protobuf crate with the protos pinned.
+- `vendor/demoparser-parser`: its parser crate with a two-line patch. Upstream only registers
+  players whose steamid is not 0, and bots have steamid 0, so a bots-only demo yields no player
+  rows (the pipeline fails with ``demo has no `tick` column``). The patch registers bots and stops
+  them replacing each other. Details and bump steps: `vendor/demoparser-parser/BOTLAB-PATCH.md`.
+  Drop it once upstream handles bots.
+
+Demos also need SourceTV to stay connected for the whole match. The bot quota cvars therefore
+live in `docker/worker/cfg/gamemode_competitive_server.cfg` (applied at map load): setting
+`bot_quota_mode` mid-map kicks SourceTV and leaves the demo empty (a ~110 KB header-only file).
+
+To check a single demo: `cargo run -p demo-pipeline -- process path/to/match.dem`.
+
 ## Dataset (`data/parquet/<table>/map=<map>/<match_id>.parquet`)
 - **`round_state_samples`:** one row per 0.5 s of live round time: `match_id, round, tick,
   team_ct, team_t, ct_won` plus the features. This is the training table.
@@ -95,33 +120,3 @@ worker.
 
 Matches are labelled from demos only. The live stream is only used for display and to tell the
 orchestrator when a match has ended.
-
-## Verified vs. not yet verified
-**Verified locally:**
-- Unit tests: `cargo test --workspace`, 17 tests.
-- Clippy is clean.
-- The services image builds in a container.
-- An integration run against Postgres: migrations, team sync, a simulated plugin stream to the
-  api, the UI WebSocket receiving frames and events, the score write and
-  `live_ended_at`, and the REST endpoints.
-- The plugin compiles, and every plugin message type deserializes in `lab-core`.
-- The UI builds and renders against its mock.
-
-**Needs a real server (spike checklist):**
-1. Metamod and CounterStrikeSharp load on the current build, and BotLab connects
-   (look for `plugin connected` in the api log).
-2. A bots-only match runs with no humans, and `bot_add ct expert "RUSHERS_1"` picks up the
-   custom profile. CS2 reads `botprofile.db` from VPKs only and never opens a loose copy, so
-   the worker mounts `csgo/overrides/botprofile.vpk` ahead of `csgo` in `gameinfo.gi`.
-   Bots joining at map load should carry team names (`AWP_SQUAD_1`…), not stock ones.
-3. `tv_record "botlab_demos/match_…"` writes into the subdirectory.
-4. demoparser parses the demo:
-   - `demo-pipeline process` prints sensible rounds and scores.
-   - `which_bomb_zone` 1/2 maps to A/B.
-5. Plugin details, best checked by comparing the live view with the demo:
-   - round-end reason codes
-   - bomb-site lookup
-   - `molotov_detonate` / `decoy_started` firing
-   - flash timing
-   - round clock during freezetime
-6. A map GLB exported with Source2Viewer lines up in the UI (see `../cs2-lab-ui/README.md`).
