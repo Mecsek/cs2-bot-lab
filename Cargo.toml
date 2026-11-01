@@ -30,5 +30,7 @@ parquet = { version = "60", default-features = false, features = ["arrow", "snap
 tokio-tungstenite = "0.30"
 
 # Pinned protobuf definitions; see vendor/csgoproto/build.rs.
+# Parser patched to register bots (steamid 0); see vendor/demoparser-parser/BOTLAB-PATCH.md.
 [patch."https://github.com/LaihoE/demoparser"]
 csgoproto = { path = "vendor/csgoproto" }
+parser = { path = "vendor/demoparser-parser" }
