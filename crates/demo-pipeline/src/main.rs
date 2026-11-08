@@ -51,6 +51,18 @@ enum Cmd {
         #[arg(long, default_value_t = 10)]
         min_plants: usize,
     },
+    /// Queue finished matches for processing again, e.g. after `calibrate-sites` or a feature
+    /// change. The running pipeline picks them up and overwrites their outputs.
+    Reprocess {
+        #[arg(long, env = "DATABASE_URL")]
+        database_url: String,
+        /// Also retry matches whose processing failed (default: only `done` ones).
+        #[arg(long)]
+        include_errors: bool,
+        /// Only matches on this map.
+        #[arg(long)]
+        map: Option<String>,
+    },
     /// Print the feature column names (JSON) in the order the features crate produces them.
     FeatureNames,
 }
@@ -83,6 +95,22 @@ async fn main() -> Result<()> {
             Ok(())
         }
         Cmd::CalibrateSites { min_plants } => calibrate_sites(&cli.data_dir, &cli.maps_file, min_plants),
+        Cmd::Reprocess { database_url, include_errors, map } => {
+            let pool = sqlx::postgres::PgPoolOptions::new().max_connections(1).connect(&database_url).await?;
+            let n = sqlx::query(
+                "UPDATE matches SET demo_status = 'pending', demo_error = NULL
+                 WHERE status = 'finished'
+                   AND (demo_status = 'done' OR ($1 AND demo_status = 'error'))
+                   AND ($2::text IS NULL OR map = $2)",
+            )
+            .bind(include_errors)
+            .bind(map)
+            .execute(&pool)
+            .await?
+            .rows_affected();
+            println!("queued {n} matches; the running pipeline will reprocess them");
+            Ok(())
+        }
         Cmd::FeatureNames => {
             println!("{}", serde_json::to_string(&features::feature_names())?);
             Ok(())

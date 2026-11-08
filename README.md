@@ -86,9 +86,12 @@ worker.
   `cargo run -p demo-pipeline -- feature-names` prints the feature columns in order.
   To show live predictions in the UI, compute `features::extract` on the live frame (in
   `crates/api/src/live.rs::on_frame`) and broadcast `UiMessage::WinProb`. The UI already
-  charts it.
+  charts it. See [TRAINING.md](TRAINING.md).
 - **Watch in CS2:** each worker's SourceTV is published on UDP 27021–27024 (worker1–4).
   In the CS2 console: `connect 127.0.0.1:27021`. The feed is live (`tv_delay 0`) and shows all players.
+- **Reprocess demos:** `docker compose exec demo-pipeline demo-pipeline reprocess`
+  (`--include-errors` to retry failed ones, `--map de_nuke` for one map). Needed after
+  `calibrate-sites` or any change to features.
 - **Debug one demo:** `cargo run -p demo-pipeline -- process path/to/match.dem`.
 
 ## Demo parsing
