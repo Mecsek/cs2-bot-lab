@@ -251,15 +251,19 @@ impl<'a> SecondPassParser<'a> {
     }
     pub fn entity_id_from_userid(&self, userid: i32) -> Option<i32> {
         if let Some(userinfo) = self.find_user_by_userid(userid) {
-            for player in self.players.values() {
-                if player.steamid == Some(userinfo.steamid) {
-                    if let Some(entity_id) = player.player_entity_id {
-                        return Some(entity_id);
+            // BOTLAB PATCH: bots all have steamid 0, so matching on it can't tell them apart.
+            if userinfo.steamid != 0 {
+                for player in self.players.values() {
+                    if player.steamid == Some(userinfo.steamid) {
+                        if let Some(entity_id) = player.player_entity_id {
+                            return Some(entity_id);
+                        }
                     }
                 }
             }
         }
-        return None;
+        // BOTLAB PATCH: resolve by slot instead; the controller entity index is slot + 1.
+        self.find_user_by_controller_id((userid & 0xFF) + 1).and_then(|p| p.player_entity_id)
     }
     pub fn find_extra(&self, fields: &Vec<EventField>) -> Result<Vec<EventField>, DemoParserError> {
         let mut extra_fields = vec![];

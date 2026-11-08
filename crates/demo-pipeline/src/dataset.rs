@@ -124,7 +124,9 @@ fn round_ends(events: &[RawEvent]) -> Vec<(u32, i32, Side, String)> {
                 "T" => Side::T,
                 _ => return None,
             };
-            let round = e.num("round")? as u32 + 1;
+            // demoparser's `round` on round_end is already 1-based (the mp_restartgame
+            // round_end carries 0 and no winner, so it is filtered out above).
+            let round = e.num("round")? as u32;
             Some((round, e.tick, side, e.str("reason").unwrap_or("unknown").to_string()))
         })
         .collect();
@@ -407,16 +409,16 @@ mod tests {
             ticks,
             events: vec![
                 // a warmup round before mp_restartgame, must be ignored
-                ev("round_end", 50, &[("round", Val::Num(0.0)), ("winner", s("T")), ("reason", s("x"))]),
+                ev("round_end", 50, &[("round", Val::Num(1.0)), ("winner", s("T")), ("reason", s("x"))]),
                 ev("round_start", 100, &[]),
                 ev("round_freeze_end", 200, &[]),
                 ev("player_death", 600, &[("user_name", s("BLUE_1")), ("attacker_name", s("RED_1")),
                     ("weapon", s("ak47")), ("headshot", Val::Bool(true))]),
-                ev("round_end", 900, &[("round", Val::Num(0.0)), ("winner", s("CT")), ("reason", s("t_killed"))]),
+                ev("round_end", 900, &[("round", Val::Num(1.0)), ("winner", s("CT")), ("reason", s("t_killed"))]),
                 ev("round_start", 1000, &[]),
                 ev("round_freeze_end", 1100, &[]),
                 ev("bomb_planted", 1500, &[("user_name", s("RED_1")), ("user_which_bomb_zone", Val::Num(2.0))]),
-                ev("round_end", 1900, &[("round", Val::Num(1.0)), ("winner", s("T")), ("reason", s("bomb_exploded"))]),
+                ev("round_end", 1900, &[("round", Val::Num(2.0)), ("winner", s("T")), ("reason", s("bomb_exploded"))]),
             ],
         }
     }

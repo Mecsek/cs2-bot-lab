@@ -102,10 +102,10 @@ deliberately). Two of its crates are replaced through `[patch."https://github.co
 in the root `Cargo.toml`:
 
 - `vendor/csgoproto`: its protobuf crate with the protos pinned.
-- `vendor/demoparser-parser`: its parser crate with a two-line patch. Upstream only registers
+- `vendor/demoparser-parser`: its parser crate with a small patch. Upstream only registers
   players whose steamid is not 0, and bots have steamid 0, so a bots-only demo yields no player
   rows (the pipeline fails with ``demo has no `tick` column``). The patch registers bots and stops
-  them replacing each other. Details and bump steps: `vendor/demoparser-parser/BOTLAB-PATCH.md`.
+  them replacing each other, and resolves the players in game events (kills, damage, bomb plants) by slot instead of steamid. Details and bump steps: `vendor/demoparser-parser/BOTLAB-PATCH.md`.
   Drop it once upstream handles bots.
 
 Demos also need SourceTV to stay connected for the whole match. The bot quota cvars therefore

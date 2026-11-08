@@ -14,18 +14,25 @@ in events or ticks" (opened 2026-09-26).
 
 ## What changed
 
-Two places, both marked `BOTLAB PATCH`:
+Three places, all marked `BOTLAB PATCH`:
 
 - `src/second_pass/collect_data.rs` (player registration from entities)
-- `src/second_pass/game_events.rs` (player registration while handling events)
+- `src/second_pass/game_events.rs`, `handle_player_connect` (player registration while handling events)
+- `src/second_pass/game_events.rs`, `entity_id_from_userid` (resolving an event's `userid`,
+  `attacker`, … to a player)
 
-In each, the `steamid != Some(0)` condition is dropped, and the "remove the earlier player with
+In the first two, the `steamid != Some(0)` condition is dropped, and the "remove the earlier player with
 the same steamid" step (`should_remove`) is skipped for steamid 0. Otherwise every bot would
 replace the previous one, since they all share steamid 0. Players stay keyed by their pawn
 entity id.
 
+In the third, upstream maps a userid to a player by steamid, so every bot resolves to the same
+(or no) player and `player_death`, `player_hurt`, `bomb_planted`, … lose their player fields
+(`user_name`, `user_X`, `user_which_bomb_zone`, …). For steamid 0 it now resolves by slot
+instead: the controller entity index is `(userid & 0xFF) + 1`.
+
 ## Bumping demoparser
 
-Copy `src/parser` from the new rev (without `test_demo.dem` / `Cargo.lock`), re-apply the two
-changes above (search for `steamid != Some(0)`), and bump the rev in
+Copy `src/parser` from the new rev (without `test_demo.dem` / `Cargo.lock`), re-apply the three
+changes above (search for `steamid != Some(0)` and `entity_id_from_userid`), and bump the rev in
 `crates/demo-pipeline/Cargo.toml`. Drop this vendored copy once upstream registers bots itself.
